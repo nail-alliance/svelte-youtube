@@ -1,3 +1,4 @@
+<svelte:options tag={null}/>
 <script context="module">
   /**
    * Expose PlayerState constants for convenience. These constants can also be
