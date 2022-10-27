@@ -1,4 +1,4 @@
-<svelte:options tag={null}/>
+<svelte:options tag="svelte-youtube-web-component"/>
 <script context="module">
   /**
    * Expose PlayerState constants for convenience. These constants can also be
