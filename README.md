@@ -1,95 +1,47 @@
-# svelte-youtube
+# Svelte + Vite
 
-Simple [Svelte](https://svelte.dev/) component acting as a thin layer over the [YouTube IFrame Player API](https://developers.google.com/youtube/iframe_api_reference). Based on [react-youtube](https://github.com/tjallingt/react-youtube).
+This template should help get you started developing with Svelte in Vite.
 
-## Features
+## Recommended IDE Setup
 
-- URL playback (soon)
-- [playback event bindings](https://developers.google.com/youtube/iframe_api_reference#Events)
-- [customizable player options](https://developers.google.com/youtube/player_parameters)
+[VS Code](https://code.visualstudio.com/) + [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode).
 
-## NOTICE
+## Need an official Svelte framework?
 
-I currently don't have the time to maintain this package, as I am not actively working on any Svelte app. If you are interested in maintaining the NPM package going forward, please send me an email.
+Check out [SvelteKit](https://github.com/sveltejs/kit#readme), which is also powered by Vite. Deploy anywhere with its serverless-first approach and adapt to various platforms, with out of the box support for TypeScript, SCSS, and Less, and easily-added support for mdsvex, GraphQL, PostCSS, Tailwind CSS, and more.
 
-## Installation
+## Technical considerations
 
-```
-$ npm install svelte-youtube
-```
+**Why use this over SvelteKit?**
 
-## Usage
+- It brings its own routing solution which might not be preferable for some users.
+- It is first and foremost a framework that just happens to use Vite under the hood, not a Vite app.
 
-```js
-<script>
-  import YouTube from 'svelte-youtube';
-</script>
+This template contains as little as possible to get started with Vite + Svelte, while taking into account the developer experience with regards to HMR and intellisense. It demonstrates capabilities on par with the other `create-vite` templates and is a good starting point for beginners dipping their toes into a Vite + Svelte project.
 
-<YouTube
-  videoId={string}                  // defaults -> null
-  id={string}                       // defaults -> null
-  class={string}                    // defaults -> null
-  options={obj}                     // defaults -> {}
-/>
-```
+Should you later need the extended capabilities and extensibility provided by SvelteKit, the template has been structured similarly to SvelteKit so that it is easy to migrate.
 
-## Events
+**Why `global.d.ts` instead of `compilerOptions.types` inside `jsconfig.json` or `tsconfig.json`?**
 
-The following events are available:
+Setting `compilerOptions.types` shuts out all other types not explicitly listed in the configuration. Using triple-slash references keeps the default TypeScript setting of accepting type information from the entire workspace, while also adding `svelte` and `vite/client` type information.
 
--  `on:ready`: Player has finished loading and is ready to play
--  `on:play`: Playback has started
--  `on:pause`: Playback has been paused
--  `on:end`: Playback has ended
--  `on:error`: An error has occurred (see below)
--  `on:stateChange`: Player State has changed (see below)
--  `on:playbackRateChange`: Playback rate has changed (see below)
--  `on:playbackQualityChange`: Playback quality has changed (see below)
+**Why include `.vscode/extensions.json`?**
 
-Each event's `detail` property contains a `data` and a `target` property (except for the `ready` event, which does not have a `data` property). The `target` is a reference to the player instance, while the `data` contains information specific to the event.
+Other templates indirectly recommend extensions via the README, but this file allows VS Code to prompt the user to install the recommended extension upon opening the project.
 
-For details on the contents of the `data` property, and for a more detailed description of each event, refer to the [YouTube IFrame Player API Events](https://developers.google.com/youtube/iframe_api_reference#Events) .
+**Why enable `checkJs` in the JS template?**
 
-### Player State
+It is likely that most cases of changing variable types in runtime are likely to be accidental, rather than deliberate. This provides advanced typechecking out of the box. Should you like to take advantage of the dynamically-typed nature of JavaScript, it is trivial to change the configuration.
 
-For convenience it is also possible to access the PlayerState constants through svelte-youtube.
+**Why is HMR not preserving my local component state?**
 
-The `PlayerState` named export contains the values that are used by the [YouTube IFrame Player API](https://developers.google.com/youtube/iframe_api_reference#onStateChange).
+HMR state preservation comes with a number of gotchas! It has been disabled by default in both `svelte-hmr` and `@sveltejs/vite-plugin-svelte` due to its often surprising behavior. You can read the details [here](https://github.com/sveltejs/svelte-hmr/tree/master/packages/svelte-hmr#preservation-of-local-state).
 
-### Player Errors
-
-Refer to [YouTube IFrame Player API](https://developers.google.com/youtube/iframe_api_reference#onError) for an explanation of the error codes used in the `on:error` event.
-
-## Controlling the player
-
-Each of the component's events contains a `target` property in the event's `detail` object.
-This property contains a reference to the underlying player instance.
-Once you have an instance of the player object, you may call any of the [available functions](https://developers.google.com/youtube/iframe_api_reference#Functions) on it.
-
-## Example
+If you have state that's important to retain within a component, consider creating an external store which would not be replaced by HMR.
 
 ```js
-<script>
-  import YouTube from 'svelte-youtube';
-
-  const options = {
-    height: '390',
-    width: '640',
-    //  see https://developers.google.com/youtube/player_parameters
-    playerVars: {
-      autoplay: 1
-    }
-  };
-
-  function onReady(event) {
-    // access to player in all event handlers via event.target
-    event.target.pauseVideo();
-  }
-</script>
-
-<YouTube videoId="2g811Eo7K8U" {options} on:ready={onReady} />
+// store.js
+// An extremely simple external store
+import { writable } from 'svelte/store'
+export default writable(0)
 ```
-
-## License
-
-MIT

@@ -1,39 +1,22 @@
 {
   "name": "svelte-youtube",
-  "version": "0.0.2",
-  "svelte": "src/index.svelte",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/PandaWhisperer/svelte-youtube"
-  },
-  "homepage": "https://github.com/PandaWhisperer/svelte-youtube#README",
-  "module": "index.mjs",
-  "main": "index.js",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
   "scripts": {
-    "build": "rollup -c",
-    "prepublishOnly": "npm run build"
-  },
-  "dependencies": {
-    "youtube-player": "^5.5.2"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "devDependencies": {
-    "rollup": "^1.11.0",
-    "rollup-plugin-node-resolve": "^4.0.0",
-    "rollup-plugin-svelte": "^5.0.0",
-    "svelte": "^3.0.0"
+    "@sveltejs/vite-plugin-svelte": "^2.4.2",
+    "svelte": "^4.0.5",
+    "vite": "^4.4.5"
+  },
+  "dependencies": {
+    "youtube-player": "^5.6.0"
   },
   "peerDependencies": {
-    "svelte": "^3.0.0"
-  },
-  "keywords": [
-    "svelte",
-    "youtube",
-    "player",
-    "video"
-  ],
-  "files": [
-    "src",
-    "index.mjs",
-    "index.js"
-  ]
+    "svelte": "^4.0.5"
+  }
 }
